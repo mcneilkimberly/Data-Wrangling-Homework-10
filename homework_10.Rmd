@@ -90,15 +90,23 @@ ggplot(marriage_year_summary, aes(x = year, y = prop, color = marital_new)) +
 
 
 # Los Angeles Lakers
-We will works with some dates and times from the lubridate::lakers dataset.
 
-## 
+## Directly Converting Integer Dates (Incorrect)
 
-1. Make a new column that directly converts the date (integer data) column to a new column of date
-data. What goes wrong? Provide a table of the first 6 rows (you may select a subset of the other
-columns) and a guess for why the conversion failed.
+The following table showcases the first six rows of the lakers data with a new column that directly converts the date (integer data) column to a new column of date data.
 
-##
+```{r}
+lakers_dates = lakers %>% 
+  mutate(
+    game_date = make_datetime(date),
+    .keep = "used")
+
+kable(head(lakers_dates), caption = "First Six Rows of Incorrect Game Date Conversion")
+```
+
+We can see how the direct conversion from a single integer turns every date January 1st, a very large year. We can guess this happens because it is taking the entire date as the first argument in the make_datetime() function, turning it into the year while every other argument (month, day, etc) becomes their default values.^[Question 1 Complete]
+
+## Date Conversion via Strings (Correct)
 
 2. Make a new column that converts the date column to strings and then converts the string to date data.
 Provide a table of the first 6 rows (you may select a subset of the other columns) and a guess for why
