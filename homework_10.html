@@ -583,13 +583,13 @@ marriage_year_summary = marriage_year_summary %&gt;%
 <h1>Los Angeles Lakers</h1>
 <div id="directly-converting-integer-dates-incorrect" class="section level2">
 <h2>Directly Converting Integer Dates (Incorrect)</h2>
-<p>The following table showcases the first six rows of the lakers data with a new column that directly converts the date (integer data) column to a new column of date data.</p>
-<pre class="r"><code>lakers_dates = lakers %&gt;% 
+<p>The following table showcases the first six rows of our new column that directly converts the date (integer data) column to a new column of date data:</p>
+<pre class="r"><code>lakers_dates_bad = lakers %&gt;% 
   mutate(
     game_date = make_datetime(date),
     .keep = &quot;used&quot;)
 
-kable(head(lakers_dates), caption = &quot;First Six Rows of Incorrect Game Date Conversion&quot;)</code></pre>
+kable(head(lakers_dates_bad), caption = &quot;First Six Rows of Incorrect Game Date Conversion&quot;)</code></pre>
 <table>
 <caption>First Six Rows of Incorrect Game Date Conversion</caption>
 <thead>
@@ -629,9 +629,67 @@ kable(head(lakers_dates), caption = &quot;First Six Rows of Incorrect Game Date 
 </div>
 <div id="date-conversion-via-strings-correct" class="section level2">
 <h2>Date Conversion via Strings (Correct)</h2>
-<ol start="2" style="list-style-type: decimal">
-<li>Make a new column that converts the date column to strings and then converts the string to date data. Provide a table of the first 6 rows (you may select a subset of the other columns) and a guess for why this works better.</li>
-</ol>
+<p>The following table showcases the first six rows of our new column that converts the date column to strings and then converts the string to date data:</p>
+<pre class="r"><code>lakers_dates_good = lakers %&gt;%
+  mutate(game_date = ymd(as.character(date)))
+
+kable(head(
+  lakers_dates_good %&gt;% 
+             select(date, 
+                    game_date, 
+                    opponent, 
+                    game_type)), 
+      caption = &quot;First Six Rows of Correct Game Date Conversion&quot;)</code></pre>
+<table>
+<caption>First Six Rows of Correct Game Date Conversion</caption>
+<thead>
+<tr class="header">
+<th align="right">date</th>
+<th align="left">game_date</th>
+<th align="left">opponent</th>
+<th align="left">game_type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">20081028</td>
+<td align="left">2008-10-28</td>
+<td align="left">POR</td>
+<td align="left">home</td>
+</tr>
+<tr class="even">
+<td align="right">20081028</td>
+<td align="left">2008-10-28</td>
+<td align="left">POR</td>
+<td align="left">home</td>
+</tr>
+<tr class="odd">
+<td align="right">20081028</td>
+<td align="left">2008-10-28</td>
+<td align="left">POR</td>
+<td align="left">home</td>
+</tr>
+<tr class="even">
+<td align="right">20081028</td>
+<td align="left">2008-10-28</td>
+<td align="left">POR</td>
+<td align="left">home</td>
+</tr>
+<tr class="odd">
+<td align="right">20081028</td>
+<td align="left">2008-10-28</td>
+<td align="left">POR</td>
+<td align="left">home</td>
+</tr>
+<tr class="even">
+<td align="right">20081028</td>
+<td align="left">2008-10-28</td>
+<td align="left">POR</td>
+<td align="left">home</td>
+</tr>
+</tbody>
+</table>
+<p>This method works better because we are conserving the YYYMMDD format, which allows ymd() to correctly parse the date.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
 </div>
 <div id="section" class="section level2">
 <h2></h2>
@@ -648,6 +706,7 @@ kable(head(lakers_dates), caption = &quot;First Six Rows of Incorrect Game Date 
 <li id="fn3"><p>Question 3 Complete<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 <li id="fn4"><p>Question 4 Complete<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 <li id="fn5"><p>Question 1 Complete<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Question 2 Complete<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 
