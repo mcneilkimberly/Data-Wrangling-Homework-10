@@ -1,0 +1,82 @@
+---
+title: "Homework 10"
+author: "Kimberly McNeil"
+date: "4/15/2026"
+output:
+  html_document:
+    code_folding: show
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r setup, include=FALSE, echo=TRUE}
+knitr::opts_chunk$set(
+  echo = TRUE#, 
+  # warning=FALSE, 
+  # message=FALSE
+  )
+library(knitr)
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+```
+
+
+# General Social Survey
+
+## Recoding Marital Levels
+
+The following table showcases the distribution of respondents across the newly defined marital categories:^[Question 1 Complete]
+
+```{r}
+gss_marital = gss_cat %>%
+  mutate(
+    marital_new = fct_collapse(
+      marital,
+      "Pre-Marriage" = "Never married",
+      "Marriage" = c("Married", "Separated"), 
+      "Post-Marriage" = c("Divorced", "Widowed"),
+      "Missing" = "No answer"
+    )
+  )
+
+gss_marital %>%
+  count(marital_new) %>%
+  kable(caption = "Frequency Table for new Marital Levels")
+```
+
+## 
+
+2. Count each year-marriage-status combination. Then take that summary, grouping by year, make a new
+column for the proportion of responses in each year that fall into each marriage level. Then store this
+data view in an object.
+
+## 
+
+3. Reorder the levels of marriage status by the latest year’s proportion and re-store the object.
+
+##
+
+4. Make a line plot of proportion versus year, colored by your four marriage levels.
+
+
+# Los Angeles Lakers
+We will works with some dates and times from the lubridate::lakers dataset.
+
+## 
+
+1. Make a new column that directly converts the date (integer data) column to a new column of date
+data. What goes wrong? Provide a table of the first 6 rows (you may select a subset of the other
+columns) and a guess for why the conversion failed.
+
+##
+
+2. Make a new column that converts the date column to strings and then converts the string to date data.
+Provide a table of the first 6 rows (you may select a subset of the other columns) and a guess for why
+this works better.
+
+##
+
+3. Find the distinct dates in the dataset (Tip: Use the date column you made along with distinct().),
+make a new column extracting the day of the week (abbreviated name), and make a bar plot of the
+games on different days.
