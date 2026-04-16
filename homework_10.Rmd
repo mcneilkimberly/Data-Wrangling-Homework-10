@@ -24,7 +24,7 @@ library(lubridate)
 
 # General Social Survey
 
-## Recoding Marital Levels
+## Recoding Marital Status
 
 The following table showcases the distribution of respondents across the newly defined marital categories:^[Question 1 Complete]
 
@@ -45,11 +45,20 @@ gss_marital %>%
   kable(caption = "Frequency Table for new Marital Levels")
 ```
 
-## 
+## Yearly Proportions of Marital Status
 
-2. Count each year-marriage-status combination. Then take that summary, grouping by year, make a new
-column for the proportion of responses in each year that fall into each marriage level. Then store this
-data view in an object.
+The following table showcases the first six rows of each year-marriage-status combination's count and calculated proportion:^[Question 2 Complete] 
+
+```{r}
+marriage_year_summary = gss_marital %>%
+  count(year, marital_new) %>%
+  group_by(year) %>%
+  mutate(prop = n / sum(n))
+
+kable(head(marriage_year_summary), caption = "First Six Rows of Each Year-Marriage-Status Combination")
+```
+
+
 
 ## 
 

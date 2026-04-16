@@ -451,8 +451,8 @@ pre code {
 
 <div id="general-social-survey" class="section level1">
 <h1>General Social Survey</h1>
-<div id="recoding-marital-levels" class="section level2">
-<h2>Recoding Marital Levels</h2>
+<div id="recoding-marital-status" class="section level2">
+<h2>Recoding Marital Status</h2>
 <p>The following table showcases the distribution of respondents across the newly defined marital categories:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <pre class="r"><code>gss_marital = gss_cat %&gt;%
   mutate(
@@ -496,19 +496,72 @@ gss_marital %&gt;%
 </tbody>
 </table>
 </div>
-<div id="section" class="section level2">
-<h2></h2>
-<ol start="2" style="list-style-type: decimal">
-<li>Count each year-marriage-status combination. Then take that summary, grouping by year, make a new column for the proportion of responses in each year that fall into each marriage level. Then store this data view in an object.</li>
-</ol>
+<div id="yearly-proportions-of-marital-status" class="section level2">
+<h2>Yearly Proportions of Marital Status</h2>
+<p>The following table showcases the first six rows of each year-marriage-status combination’s count and calculated proportion:<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<pre class="r"><code>marriage_year_summary = gss_marital %&gt;%
+  count(year, marital_new) %&gt;%
+  group_by(year) %&gt;%
+  mutate(prop = n / sum(n))
+
+kable(head(marriage_year_summary), caption = &quot;First Six Rows of Each Year-Marriage-Status Combination&quot;)</code></pre>
+<table>
+<caption>First Six Rows of Each Year-Marriage-Status Combination</caption>
+<thead>
+<tr class="header">
+<th align="right">year</th>
+<th align="left">marital_new</th>
+<th align="right">n</th>
+<th align="right">prop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2000</td>
+<td align="left">Missing</td>
+<td align="right">1</td>
+<td align="right">0.0003550</td>
+</tr>
+<tr class="even">
+<td align="right">2000</td>
+<td align="left">Pre-Marriage</td>
+<td align="right">712</td>
+<td align="right">0.2527512</td>
+</tr>
+<tr class="odd">
+<td align="right">2000</td>
+<td align="left">Marriage</td>
+<td align="right">1390</td>
+<td align="right">0.4934327</td>
+</tr>
+<tr class="even">
+<td align="right">2000</td>
+<td align="left">Post-Marriage</td>
+<td align="right">714</td>
+<td align="right">0.2534611</td>
+</tr>
+<tr class="odd">
+<td align="right">2002</td>
+<td align="left">Pre-Marriage</td>
+<td align="right">708</td>
+<td align="right">0.2560579</td>
+</tr>
+<tr class="even">
+<td align="right">2002</td>
+<td align="left">Marriage</td>
+<td align="right">1365</td>
+<td align="right">0.4936709</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="section-1" class="section level2">
+<div id="section" class="section level2">
 <h2></h2>
 <ol start="3" style="list-style-type: decimal">
 <li>Reorder the levels of marriage status by the latest year’s proportion and re-store the object.</li>
 </ol>
 </div>
-<div id="section-2" class="section level2">
+<div id="section-1" class="section level2">
 <h2></h2>
 <ol start="4" style="list-style-type: decimal">
 <li>Make a line plot of proportion versus year, colored by your four marriage levels.</li>
@@ -518,19 +571,19 @@ gss_marital %&gt;%
 <div id="los-angeles-lakers" class="section level1">
 <h1>Los Angeles Lakers</h1>
 <p>We will works with some dates and times from the lubridate::lakers dataset.</p>
-<div id="section-3" class="section level2">
+<div id="section-2" class="section level2">
 <h2></h2>
 <ol style="list-style-type: decimal">
 <li>Make a new column that directly converts the date (integer data) column to a new column of date data. What goes wrong? Provide a table of the first 6 rows (you may select a subset of the other columns) and a guess for why the conversion failed.</li>
 </ol>
 </div>
-<div id="section-4" class="section level2">
+<div id="section-3" class="section level2">
 <h2></h2>
 <ol start="2" style="list-style-type: decimal">
 <li>Make a new column that converts the date column to strings and then converts the string to date data. Provide a table of the first 6 rows (you may select a subset of the other columns) and a guess for why this works better.</li>
 </ol>
 </div>
-<div id="section-5" class="section level2">
+<div id="section-4" class="section level2">
 <h2></h2>
 <ol start="3" style="list-style-type: decimal">
 <li>Find the distinct dates in the dataset (Tip: Use the date column you made along with distinct().), make a new column extracting the day of the week (abbreviated name), and make a bar plot of the games on different days.</li>
@@ -541,6 +594,7 @@ gss_marital %&gt;%
 <hr />
 <ol>
 <li id="fn1"><p>Question 1 Complete<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Question 2 Complete<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 
