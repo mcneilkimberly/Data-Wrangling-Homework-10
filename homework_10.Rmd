@@ -58,15 +58,35 @@ marriage_year_summary = gss_marital %>%
 kable(head(marriage_year_summary), caption = "First Six Rows of Each Year-Marriage-Status Combination")
 ```
 
+## Reorder Marital Levels by Latest Year
+
+Now, let's reorder the levels of marriage status by the latest year’s proportion and re-store the object:^[Question 3 Complete] 
+
+```{r}
+latest_year = max(marriage_year_summary$year) # select single col --> df$column_name
+
+marriage_year_summary = marriage_year_summary %>%
+  mutate(
+    marital_new = fct_reorder(marital_new, year)
+  )
+```
 
 
-## 
+## Line Plot of Proportion Versus Year
 
-3. Reorder the levels of marriage status by the latest year’s proportion and re-store the object.
+The following line plot showcases the marital status' proportions over time in years, colored by our four marriage levels:^[Question 4 Complete] 
 
-##
+```{r}
+ggplot(marriage_year_summary, aes(x = year, y = prop, color = marital_new)) +
+  geom_line() +
+  labs(
+    title = "Marital Status Proportions Over Time",
+    x = "Year",
+    y = "Proportion",
+    color = "Marital Status"
+  )
+```
 
-4. Make a line plot of proportion versus year, colored by your four marriage levels.
 
 
 # Los Angeles Lakers
